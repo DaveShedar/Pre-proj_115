@@ -1,7 +1,6 @@
 package User;
 
 import org.hibernate.annotations.NaturalId;
-
 import javax.persistence.*;
 
 @Entity
@@ -77,5 +76,4 @@ public class User {
     public void setRole(String country) {
         this.role = role;
     }
-
 }

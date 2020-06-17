@@ -2,7 +2,6 @@ package Dao;
 
 import User.User;
 import UserDAOInterface.UserDAOInterface;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -136,32 +135,8 @@ public class UserJDBCDAO implements UserDAOInterface {
             System.out.println("_____________________________________________");
             System.out.println("Поймано исключение в Получение роли:" + role);
             System.out.println("_____________________________________________");
-
         }
         return "absent";
-    }
-
-    public User getUserByNamePassword(String name, String password){
-        User user = null;
-        try (
-                PreparedStatement preparedStatement = connection.
-                        prepareStatement("SELECT FROM users WHERE name = ? and password = ?")) {
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, password);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String role = resultSet.getString("role");
-                user = new User(id, name, password, role);
-            }
-            return user;
-        } catch (Exception e) {
-            System.out.println("_____________________________________________");
-            System.out.println("Поймано исключение в Получение пользователя:" + user);
-            System.out.println("_____________________________________________");
-        }
-        return null;
     }
 
     private static Connection getMysqlConnection() {

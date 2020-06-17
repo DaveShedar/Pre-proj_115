@@ -4,7 +4,6 @@ import User.User;
 import UserDAOInterface.UserDAOInterface;
 import org.hibernate.Session;
 import util.DBHelperHibernateDAO;
-
 import java.sql.SQLException;
 import java.util.List;
 
@@ -81,17 +80,6 @@ public class UserHibernateDAO implements UserDAOInterface {
         getSession().flush();
         getSession().clear();
         return user.getRole();
-    }
-
-    @Override
-    public User getUserByNamePassword(String name, String password){
-        User user = (User) session.byNaturalId(User.class)
-                .using("name", name)
-                .using("password", password)
-                .load();
-        getSession().flush();
-        getSession().clear();
-        return user;
     }
 
     @Override

@@ -1,15 +1,12 @@
 package Filter;
 
 import Servlets.UserService;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicReference;
-
 import static java.util.Objects.nonNull;
 
 @WebFilter("/")
@@ -28,9 +25,8 @@ public class AuthFilter implements Filter {
         String name = req.getParameter("name");
         String password = req.getParameter("password");
 
-        final HttpSession session = req.getSession();
+        HttpSession session = req.getSession();
 
-        //Logged user.
         if (nonNull(session) && nonNull(session.getAttribute("name")) && nonNull(session.getAttribute("password"))) {
             String role = (String) session.getAttribute("role");
             moveToMenu(req, res, role);
@@ -40,7 +36,6 @@ public class AuthFilter implements Filter {
             req.getSession().setAttribute("name", name);
             req.getSession().setAttribute("role", role);
             moveToMenu(req, res, role);
-
         } else {
             moveToMenu(req, res, "unknown");
         }
@@ -48,12 +43,9 @@ public class AuthFilter implements Filter {
 
     private void moveToMenu(HttpServletRequest req, HttpServletResponse res, String role) throws ServletException, IOException {
         if (role.equals("admin")) {
-//            req.getRequestDispatcher("admin_menu.jsp").forward(req, res);
             res.sendRedirect(req.getContextPath() + "/admin_welcome");
         } else if (role.equals("user")) {
             res.sendRedirect(req.getContextPath() + "/user_welcome");
-//            req.getRequestDispatcher("user_menu.jsp").forward(req, res);
-
         } else {
             req.getRequestDispatcher("login.jsp").forward(req, res);
         }

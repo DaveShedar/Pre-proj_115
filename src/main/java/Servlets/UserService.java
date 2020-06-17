@@ -41,9 +41,9 @@ public class UserService {
         return DBHelper.getDBHelper().getRoleByNamePassword(name, password);
     }
 
-    protected User getUserByNamePassword(String name, String password){
-        return DBHelper.getDBHelper().getUserByNamePassword(name, password);
-    }
+//    protected User getUserByNamePassword(String name, String password){
+//        return DBHelper.getDBHelper().getUserByNamePassword(name, password);
+//    }
 
     public boolean isUserExist(String name, String password){
         return DBHelper.getDBHelper().isUserExist(name, password);
