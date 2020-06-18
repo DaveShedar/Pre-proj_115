@@ -1,6 +1,6 @@
 package Filter;
 
-import Servlets.UserService;
+import Service.UserService;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -25,16 +25,16 @@ public class AuthFilter implements Filter {
         String name = req.getParameter("name");
         String password = req.getParameter("password");
 
-        HttpSession session = req.getSession();
+        final HttpSession session = req.getSession();
 
         if (nonNull(session) && nonNull(session.getAttribute("name")) && nonNull(session.getAttribute("password"))) {
             String role = (String) session.getAttribute("role");
             moveToMenu(req, res, role);
         } else if (UserService.getUserService().isUserExist(name, password)) {
             String role = UserService.getUserService().getRoleByNamePassword(name, password);
-            req.getSession().setAttribute("password", password);
-            req.getSession().setAttribute("name", name);
-            req.getSession().setAttribute("role", role);
+            session.setAttribute("password", password);
+            session.setAttribute("name", name);
+            session.setAttribute("role", role);
             moveToMenu(req, res, role);
         } else {
             moveToMenu(req, res, "unknown");
@@ -43,9 +43,9 @@ public class AuthFilter implements Filter {
 
     private void moveToMenu(HttpServletRequest req, HttpServletResponse res, String role) throws ServletException, IOException {
         if (role.equals("admin")) {
-            res.sendRedirect(req.getContextPath() + "/admin_welcome");
+            res.sendRedirect("/admin");
         } else if (role.equals("user")) {
-            res.sendRedirect(req.getContextPath() + "/user_welcome");
+            res.sendRedirect("/user");
         } else {
             req.getRequestDispatcher("login.jsp").forward(req, res);
         }

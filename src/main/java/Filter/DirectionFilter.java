@@ -22,7 +22,7 @@ public class DirectionFilter implements Filter {
         if (req.getSession().getAttribute("role").equals("admin")) {
             filterChain.doFilter(req, res);
         } else if (req.getSession().getAttribute("role").equals("user")) {
-            RequestDispatcher rd = req.getRequestDispatcher("user_menu.jsp");
+            RequestDispatcher rd = req.getRequestDispatcher("user-info.jsp");
             rd.forward(req, res);
         } else {
             req.getRequestDispatcher("login.jsp").forward(req, res);

@@ -3,7 +3,7 @@ package Dao;
 import User.User;
 import UserDAOInterface.UserDAOInterface;
 import org.hibernate.Session;
-import util.DBHelperHibernateDAO;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -17,57 +17,55 @@ public class UserHibernateDAO implements UserDAOInterface {
         return userHibernateDAO;
     }
 
-    private static Session session;
-
-    public static Session getSession() {
-        if (session == null) {
-            session = DBHelperHibernateDAO.getSessionFactory().openSession();
-        }
-        return session;
-    }
+    private static Session session = DBHelperHibernateDAO.getSessionFactory().openSession();
 
     public UserHibernateDAO() {
     }
 
     @Override
     public void addUser(User user) throws SQLException {
-        getSession().save(user);
-        getSession().flush();
-        getSession().clear();
+        session.save(user);
+        session.flush();
+        session.clear();
+        session.close();
     }
 
     @Override
     public User getUserById(int id) {
-        User user = (User) getSession().get(User.class, id);
-        getSession().flush();
-        getSession().clear();
+        User user = (User) session.get(User.class, id);
+        session.flush();
+        session.clear();
+        session.close();
         return user;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List< User > getAllUsers() {
-        getSession().getTransaction().begin();
-        List< User > list = getSession().createQuery(" FROM User").list();
-        getSession().getTransaction().commit();
-        getSession().flush();
-        getSession().clear();
+        session.getTransaction().begin();
+        List< User > list = session.createQuery(" FROM User").list();
+        session.getTransaction().commit();
+        session.flush();
+        session.clear();
+        session.close();
         return list;
     }
 
     @Override
     public boolean deleteUser(int id) throws SQLException {
-        getSession().delete(getSession().get(User.class, id));
-        getSession().flush();
-        getSession().clear();
+        session.delete(session.get(User.class, id));
+        session.flush();
+        session.clear();
+        session.close();
         return true;
     }
 
     @Override
     public boolean updateUser(User user) throws SQLException {
-        getSession().update(user);
-        getSession().flush();
-        getSession().clear();
+        session.update(user);
+        session.flush();
+        session.clear();
+        session.close();
         return true;
     }
 
@@ -77,8 +75,9 @@ public class UserHibernateDAO implements UserDAOInterface {
                 .using("name", name)
                 .using("password", password)
                 .load();
-        getSession().flush();
-        getSession().clear();
+        session.flush();
+        session.clear();
+        session.close();
         return user.getRole();
     }
 
@@ -88,8 +87,9 @@ public class UserHibernateDAO implements UserDAOInterface {
                 .using("name", name)
                 .using("password", password)
                 .load();
-        getSession().flush();
-        getSession().clear();
+        session.flush();
+        session.clear();
+        session.close();
         return user != null;
     }
 }

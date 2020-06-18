@@ -1,6 +1,6 @@
 package Servlets;
 
-import javax.servlet.ServletException;
+import Service.UserService;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,12 +11,14 @@ import java.sql.SQLException;
 @WebServlet("/admin/delete")
 public class DeleteServlet extends HttpServlet {
 
+    private final UserService userService = UserService.getUserService();
+
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             int id = Integer.parseInt(req.getParameter("id"));
-            UserService.getUserService().deleteUser(id);
-            resp.sendRedirect(req.getContextPath() + "/admin");
+            userService.deleteUser(id);
+            resp.sendRedirect("/admin");
         } catch (SQLException e) {
             e.printStackTrace();
         }

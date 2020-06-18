@@ -7,10 +7,11 @@
 <body>
 <center>
     <h4>
-        <a href="<%=request.getContextPath()%>/admin_newForm">Add New User</a>
+        <a href="/admin_newForm">Add New User</a>
         &nbsp;&nbsp;&nbsp;
-        <a href="<%=request.getContextPath()%>/admin">List All Users</a>
-
+        <a href="/admin">List All Users</a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="/logout">Logout</a><br>
     </h4>
 </center>
 <div align="center">
@@ -25,14 +26,14 @@
         </tr>
         <c:forEach var="user" items="${listUsers}">
             <tr>
-                <td><c:out value="${user.id}" /></td>
-                <td><c:out value="${user.name}" /></td>
-                <td><c:out value="${user.password}" /></td>
-                <td><c:out value="${user.role}" /></td>
+                <td>${user.id}</td>
+                <td>${user.name}</td>
+                <td>${user.password}</td>
+                <td>${user.role}</td>
                 <td>
-                    <a href="<%=request.getContextPath()%>/admin_edit?id=<c:out value="${user.id}" />">Edit</a>
+                    <a href="/admin_edit?id=${user.id}">Edit</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="<%=request.getContextPath()%>/admin/delete?id=<c:out value="${user.id}" />">Delete</a>
+                    <a href="/admin/delete?id=${user.id}">Delete</a>
                 </td>
             </tr>
         </c:forEach>

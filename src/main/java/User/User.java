@@ -21,7 +21,7 @@ public class User {
     private String password;
 
     @NaturalId
-    @Column(name = "role", columnDefinition = "varchar(255) default 'user'")
+    @Column(name = "role")
     private String role;
 
     public User(int id, String name, String password, String role) {

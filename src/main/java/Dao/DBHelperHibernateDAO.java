@@ -1,4 +1,4 @@
-package util;
+package Dao;
 
 import User.User;
 import org.hibernate.SessionFactory;

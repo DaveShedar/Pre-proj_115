@@ -1,8 +1,8 @@
-package Servlets;
+package Service;
 
 import User.User;
-import util.DBHelper;
-
+import UserDAOInterface.UserDAOInterface;
+import util.UserDAOFactory;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -17,35 +17,33 @@ public class UserService {
         return userService;
     }
 
+    private static UserDAOInterface typeDb = UserDAOFactory.getTypeDB();
+
     public void addUser(User user) throws SQLException {
-        DBHelper.getDBHelper().addUser(user);
+        typeDb.addUser(user);
     }
 
     public boolean updateUser(User user) throws SQLException {
-        return DBHelper.getDBHelper().updateUser(user);
+        return typeDb.updateUser(user);
     }
 
     public User getUserById(int id) {
-        return DBHelper.getDBHelper().getUserById(id);
+        return typeDb.getUserById(id);
     }
 
     public List< User > getAllUsers() {
-        return DBHelper.getDBHelper().getAllUsers();
+        return typeDb.getAllUsers();
     }
 
     public boolean deleteUser(int id) throws SQLException {
-        return DBHelper.getDBHelper().deleteUser(id);
+        return typeDb.deleteUser(id);
     }
 
     public String getRoleByNamePassword(String name, String password){
-        return DBHelper.getDBHelper().getRoleByNamePassword(name, password);
+        return typeDb.getRoleByNamePassword(name, password);
     }
 
-//    protected User getUserByNamePassword(String name, String password){
-//        return DBHelper.getDBHelper().getUserByNamePassword(name, password);
-//    }
-
     public boolean isUserExist(String name, String password){
-        return DBHelper.getDBHelper().isUserExist(name, password);
+        return typeDb.isUserExist(name, password);
     }
 }

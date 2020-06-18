@@ -8,18 +8,18 @@
 <body>
 <center>
     <h3>
-        <a href="<%=request.getContextPath()%>/admin_newForm">Add New User</a>
+        <a href="/admin_newForm">Add New User</a>
         &nbsp;&nbsp;&nbsp;
-        <a href="<%=request.getContextPath()%>/admin">List All Users</a>
+        <a href="/admin">List All Users</a>
 
     </h3>
 </center>
 <div align="center">
     <c:if test="${user != null}">
-    <form action="<%=request.getContextPath()%>/admin/update" method="post">
+    <form action="/admin_edit" method="post">
         </c:if>
         <c:if test="${user == null}">
-        <form action="<%=request.getContextPath()%>/admin_newForm" method="post">
+        <form action="/admin_newForm" method="post">
             </c:if>
             <table border="1" cellpadding="5">
                 <caption>
